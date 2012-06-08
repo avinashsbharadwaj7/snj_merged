@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+#!/bin/sh
+
+spawn scp -r "ndsuser@172.18.84.27:/data/OSS_Sonar/*.txt" /home/ekf/import_scripts/imported_files
+#######################
+expect {
+-re ".*es.*o.*" {
+exp_send "yes\r"
+exp_continue
+}
+-re ".*sword.*" {
+exp_send "nds123\r"
+}
+}
+interact
+
+

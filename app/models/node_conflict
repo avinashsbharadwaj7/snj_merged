@@ -1,0 +1,6 @@
+<?php
+
+	class NodeConflict extends AppModel 
+	{
+		$name = 'NodeConflict';	
+	}

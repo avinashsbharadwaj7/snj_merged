@@ -1,0 +1,403 @@
+#!/usr/bin/php
+<?php
+
+require_once "MDB2.php";
+require_once "inireader.php";
+
+if ($argc != 2) {
+   echo "Usage :".$argv[0]." <path_to_file>\n";
+   exit (0);
+}
+
+if (!file_exists($argv[1])) {
+   echo "Usage :".$argv[0]." <path_to_file>\n";
+   echo "input file ".$argv[1]." does not exist.\n";
+   exit (0);
+}
+
+$inputFile = $argv[1];
+$import = new ImportLTE($inputFile);
+$import->run();
+exit(0);
+
+class ImportLTE {
+
+    private $inputFile = NULL;
+    private $handle    = null;
+    private $ini       = null;
+    private $insertTargetStatement = null;
+    private $updateTargetStatement = null;
+    private $insertTargetParentStatement = null;
+    private $updateTargetParentStatement = null;
+    private $dbName    = "snj";
+    
+    public function __construct($inputFile)
+    {
+        $this->ini = new IniReader();
+        $this->inputFile = $inputFile;
+        
+        $logFileName =  $this->ini->getValue("resources.logfilename");
+        echo "Logging to file <$logFileName>\n";
+        ini_set('log_errors', true);
+        ini_set('error_log', $logFileName);
+    
+        $dsn =  $this->ini->getValue("resources.db.snj.dsn");
+        // echo "DSN = " . $dsn . "\n";
+        $dbName = $this->getDatabaseName($dsn);
+        if ("" == $dbName)
+        {
+            die ("Unable to get database name from DSN=<$snjDsn>\n");
+        }
+    
+    
+        $this->handle =& MDB2::singleton($dsn, $options);
+        if (null === $this->handle)
+        {
+            echo "MDB2 connection failure for DSN=<$dsn>\n";
+        }
+        if (PEAR::isError($this->handle))
+        {
+            die ($this->handle->getMessage(). "\n" . $this->handle->getDebugInfo());
+        }
+    
+        
+        $this->insertTargetStatement= $this->handle->prepare("INSERT INTO $this->dbName.target "
+            ."(name, type, ipaddress, password, customer, flag) "
+            ."VALUES "
+            ."(:name, :type, :ipaddress, :password, :customer, NULL) "
+            );
+        
+        if (PEAR::isError($this->insertTargetStatement))
+        {
+            die ($this->insertTargetStatement->getMessage(). "\n" . $this->insertTargetStatement->getDebugInfo());
+        }
+        
+        $array_to_bind = array('name' => $enodeb,
+                               'type' => $type,
+                               'ipaddress' => $ipaddress,
+                               'password' => $password,
+                               'customer' => $customer
+                              );
+        $this->insertTargetStatement->bindParamArray($array_to_bind);
+        if (PEAR::isError($this->insertTargetStatement))
+        {
+            die ($this->insertTargetStatement->getMessage(). "\n" . $this->insertTargetStatement->getDebugInfo());
+        }
+        
+        $this->updateTargetStatement= $this->handle->prepare("UPDATE $this->dbName.target SET "
+            ."name=:name, type=:type, ipaddress=:ipaddress, password=:password, customer=:customer, flag=NULL "
+            ."WHERE "
+            ."(name=:name AND type=:type AND customer=:customer)"
+            );
+        
+        if (PEAR::isError($this->updateTargetStatement))
+        {
+            die ($this->updateTargetStatement->getMessage(). "\n" . $this->updateTargetStatement->getDebugInfo());
+        }
+        
+        $this->updateTargetStatement->bindParamArray($array_to_bind);
+        if (PEAR::isError($this->updateTargetStatement))
+        {
+            die ($this->updateTargetStatement->getMessage(). "\n" . $this->updateTargetStatement->getDebugInfo());
+        }
+        
+        
+        
+        $this->insertTargetParentStatement= $this->handle->prepare("INSERT INTO $this->dbName.target_parent "
+            ."(node_id, parent_id) "
+            ."VALUES "
+            ."(:node_id, :parent_id) "
+            );
+        
+        if (PEAR::isError($this->insertTargetParentStatement))
+        {
+            die ($this->insertTargetParentStatement->getMessage(). "\n" . $this->insertTargetParentStatement->getDebugInfo());
+        }
+        
+        $array_to_bind = array('node_id' => $node_id,
+                               'parent_id' => $parent_id
+                              );
+        $this->insertTargetParentStatement->bindParamArray($array_to_bind);
+        if (PEAR::isError($this->insertTargetParentStatement))
+        {
+            die ($this->insertTargetParentStatement->getMessage(). "\n" . $this->insertTargetParentStatement->getDebugInfo());
+        }
+        
+        $this->updateTargetParentStatement= $this->handle->prepare("UPDATE $this->dbName.target_parent SET "
+            ."node_id=:node_id, parent_id=:parent_id "
+            ." WHERE (id = :id) "
+            );
+        
+        if (PEAR::isError($this->updateTargetParentStatement))
+        {
+            die ($this->updateTargetParentStatement->getMessage(). "\n" . $this->updateTargetParentStatement->getDebugInfo());
+        }
+        
+        $array_to_bind = array('id' => $id,
+                               'node_id' => $node_id,
+                               'parent_id' => $parent_id
+                              );
+        $this->updateTargetParentStatement->bindParamArray($array_to_bind);
+        if (PEAR::isError($this->updateTargetParentStatement))
+        {
+            die ($this->updateTargetParentStatement->getMessage(). "\n" . $this->updateTargetParentStatement->getDebugInfo());
+        }
+        
+        
+    }
+
+    function getDatabaseName($dsn)
+    {
+        $regexp = '"^.*\/([^\/]*$)"';
+        $matches=array();
+        $ret = preg_match($regexp, $dsn, $matches);
+        $dbName = "";
+        if ($ret != 0)
+        {
+            $dbName = $matches[1];
+        }
+        return $dbName;
+    }
+    
+    // $columns is an array of column names.
+    private function getColumns($query, $dbName=null)
+    {
+      try {
+          // if dbName != null or "", use handle[$dbName].
+          // else get dbName for "FROM (dbName).table" pattern.
+          // if handle does not exist, print and return ERROR.
+          if ((null == $dbName) || ("" == $dbName))
+          {
+              $dbName = $this->getDatabaseNameFromQuery($query);
+              if ("" == $dbName)
+              {
+                  $dbName = $this->defaultDBName;
+              }
+          }
+          // echo "Using DB=<$dbName>, Query=<$query>\n";
+          
+          $row = array();
+          $res =& $this->handle->query($query);
+      
+          if (PEAR::isError($res))
+          {
+             $errorMessage = $res->getMessage(). "\n" . $res->getDebugInfo();
+             error_log("Database Error for DB=<$dbName> Query=<$query>\n");
+             error_log("ERROR=<$errorMessage>\n");
+             echo("Database Error for DB=<$dbName> Query=<$query>\n");
+             echo("ERROR=<$errorMessage>\n");
+             return array();
+          }
+
+          while($row = $res->fetchRow())
+          {
+              return $row;
+          }
+      } catch (Exception  $e)
+      {
+          echo "Database exception : \n Query=<$query>\n Exception=<$e->getMessage()";
+      }
+      return array();
+      
+    }
+    public function run()
+    {
+        
+        // Initialize counters
+        $linesProcessed=0;
+        $linesMatchedPattern=0;
+        $linesDidntMatchPattern=0;
+        $numInserts=0;
+        $numUpdates=0;
+        $numDeletes=0;
+        $numSQLErrors=0;
+        $numParentInserts=0;
+        $numParentUpdates=0;
+        $numParentSQLErrors=0;
+  
+        $fcontents = array();
+        $fcontents = file ($this->inputFile); 
+        $lookupFileName = basename($this->inputFile); 
+        $lookupFileName = preg_replace('/_[0-9]{8}_[0-9]{4}/','_*',$lookupFileName); 
+      
+        $anyRE = "([^ \t]+)";
+        $delimRE = "[\,|; \t]+";
+        
+        // eNodeB	ipAddress	Password	OSS
+        $myRegExp = "/$anyRE$delimRE$anyRE$delimRE$anyRE$delimRE$anyRE$/";
+      
+        $logMsg = "Read ".sizeof($fcontents)." lines\n";
+        error_log( $logMsg );
+        echo( $logMsg );
+      
+        for($i=0; $i<sizeof($fcontents); $i++) { 
+      
+            $linesProcessed++;
+      
+            $line = trim($fcontents[$i]); 
+      
+            if (preg_match($myRegExp, $line, $matches)) {
+      
+               $enodeb    = $matches[1];
+               $ipaddress = $matches[2];
+               $password  = $matches[3];
+               $oss       = $matches[4];
+               
+               if("eNodeB" == $enodeb) continue; // skip header
+               
+               $linesMatchedPattern++;
+               
+               $currentNodeId = $this->getNodeId($enodeb);
+               
+               $targetParentRowId = -1;
+               
+               // Verify node, get node type.
+               $query = "SELECT oss_name, customer from oss_mapping WHERE look_up='$oss'" . 
+                         " AND file_name='$lookupFileName' ".
+                         " AND function='citrix' ORDER BY server LIMIT 1";
+               // echo "---- Query=<$query>\n";
+               $ossMappingInfo = $this->getColumns($query, $this->dbName);
+               $customer = ""; 
+               // echo "---- ossMappingInfo =<".print_r($ossMappingInfo, true).">\n";
+               $newParentNodeName = "";
+               if (0 != count($ossMappingInfo))
+               {
+                   $newParentNodeName = $ossMappingInfo[0];
+                   $customer = $ossMappingInfo[1];
+               }
+               else
+               {
+                   $logMsg = "ERROR: No parent for node=$enodeb. Aborting import!\n";
+                   error_log($logMsg);
+                   echo $logMsg;
+                   break;
+               }
+               
+               $data = array('name' => $enodeb, 'type' => "eNodeB", 'ipaddress' => $ipaddress, 
+                             'password' => $password, 'customer' => $customer);
+                            
+               
+               // echo "---- Need to insert parent <".$ossMappingInfo[0].">\n";
+               if ($currentNodeId == -1)
+               {
+                   // echo "---- Inserting : <".print_r($data, true).">\n";
+                   $res = $this->insertTargetStatement->execute($data);
+                   $currentNodeId = $this->getNodeId($enodeb);
+               }
+               else
+               {
+                   // echo "---- Updating : <".print_r($data, true).">\n";
+                   $res = $this->updateTargetStatement->execute($data);
+               }
+               if (PEAR::isError($res))
+               {
+                   $logMsg = "Error=<".$res->getMessage().">\n".$res->getDebugInfo();
+                   error_log($logMsg);
+                   echo $logMsg;
+                   $numSQLErrors++;
+                   $logMsg = "ERROR: Error inserting/updating target table for node=$enodeb. Aborting import!\n";
+                   error_log($logMsg);
+                   echo $logMsg;
+                   break;
+               }
+               else
+               {
+                  ($currentNodeId == -1) ?  $numInserts++ : $numUpdates++;
+               }
+               
+               // Check if this node already exists in target_parent and get id.
+               $targetParentRowId = $this->getParentTableRowId($currentNodeId);
+               $parentNodeId = $this->getNodeId($newParentNodeName);
+               
+               // Update target_parent
+               if (-1 == $targetParentRowId)
+               {
+                   $parentData = array('node_id' => $currentNodeId,
+                                       'parent_id' => $parentNodeId);
+                   // echo "---- Inserting into target_parent table <".print_r($parentData, true).">\n";
+                   $res = $this->insertTargetParentStatement->execute($parentData);
+               }
+               else
+               {
+                   $parentData = array('id' => $targetParentRowId,
+                                       'node_id' => $currentNodeId,
+                                       'parent_id' => $parentNodeId);
+                   // echo "---- Updating target_parent table <".print_r($parentData, true).">\n";
+                   $res = $this->updateTargetParentStatement->execute($parentData);
+               }
+               if (PEAR::isError($res))
+               {
+                   $logMsg = "Error=<".$res->getMessage().">\n".$res->getDebugInfo();
+                   error_log($logMsg);
+                   echo $logMsg;
+                   $numParentSQLErrors++;
+                   $logMsg = "ERROR: Error inserting/updating target_parent table for node=$enodeb. Aborting import!\n";
+                   error_log($logMsg);
+                   echo $logMsg;
+                   break;
+               }
+               else
+               {
+                  ($targetParentRowId == -1) ?  $numParentInserts++ : $numParentUpdates++;
+               }
+                            
+            } 
+        }
+      
+        $logMsg = "---------- R E P O R T ----------------------\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Total Lines Processed                 = $linesProcessed\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Lines Matched pattern                 = $linesMatchedPattern\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Lines No Match                        = $linesDidntMatchPattern\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target        table INSERTS = $numInserts\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target        table UPDATES = $numUpdates\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target        table ERRORS  = $numSQLErrors\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target_parent table INSERTS = $numParentInserts\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target_parent table UPDATES = $numParentUpdates\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "Number of target_parent table ERRORS  = $numParentSQLErrors\n";
+        error_log($logMsg); echo $logMsg;
+        $logMsg = "---------------------------------------------\n";
+        error_log($logMsg); echo $logMsg;
+        
+        $ret = (0 == $numSQLErrors) ? 0 : 1;
+        exit ($ret);
+    }
+    
+    function getNodeId($enodeb)
+    {
+        
+        // Check if this node already exists, and get id.
+        $query = "SELECT id FROM target WHERE name='$enodeb'";
+        $nodeInfo = $this->getColumns($query, $this->dbName);
+        $currentNodeId = -1;
+        if (0 != count($nodeInfo))
+        {
+            $currentNodeId = $nodeInfo[0];   
+        }
+        return $currentNodeId;
+    }
+    
+    function getParentTableRowId($nodeId)
+    {
+        
+        // Check if this node already exists in target_parent and get id.
+        $query = "SELECT id, node_id FROM target_parent WHERE node_id=$nodeId";
+        $targetParentNodeInfo = $this->getColumns($query, $this->dbName);
+        $targetParentRowId = -1;
+        if (0 != count($targetParentNodeInfo))
+        {
+            $targetParentRowId = $targetParentNodeInfo[0];   
+        }
+        return $targetParentRowId;
+    }
+}
+      
+?>

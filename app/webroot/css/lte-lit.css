@@ -1,0 +1,276 @@
+/* 
+    Document   : lte-lit
+    Created on : Jun 2, 2011, 6:32:22 PM
+    Author     : ebrrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+div.lte-link {
+    padding: 5px;
+    margin: 2px;
+    margin-left: 245px;
+}
+
+div.div_rssi_table {
+    width: 520px;
+    height: 128px;
+    padding: 0px;
+    margin: 0px;
+}
+
+div.div_rssi_row {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+div.div_rssi_column_header {
+    width: 62%;
+    clear: none;
+    float: left;
+    padding: 0px;
+    padding-bottom: 6px;
+    margin: 0px;
+    text-align: center;
+}
+
+div.div_rssi_column {
+    width: 31%;
+    clear: none;
+    float: left;
+    padding: 0px;
+    padding-bottom: 6px;
+    margin: 0px;
+    text-align: center;
+}
+
+label.div_rssi_column {
+    width: 0px;
+}
+
+div.lte_view {
+   
+}
+
+div.lte_container {
+    margin-left: 60px;
+    width: 920px;
+}
+
+div.altrow {
+    background: #E4E8EF;
+}
+
+div.view_col_left {
+    font-size: 12px;
+    padding-left: 4px;
+    margin: 0px;
+    line-height: 2.5em;
+    font-weight: bold;
+    width: 46%;
+    float: left;
+    clear: none;
+    
+}
+
+div.view_col_right {
+    margin: 0px;
+    font-size: 12px;
+    float: left;
+    clear: right;
+    width: 53%;
+    line-height: 2em;
+}
+
+div.paginator_table {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+div.paginator_row {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    min-width: 790px;
+}
+
+div.paginator_col_header_inner {
+    padding: 6px;
+    line-height: 2.2em;
+    background-color: #c7e2cc;
+}
+
+div.paginator_col_header {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 14%;
+}
+
+div.paginator_col_header_id {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 100px;
+}
+
+div.paginator_col_header_date {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 90px;
+}
+
+div.paginator_col_header_name {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 195px;
+}
+
+div.paginator_col_inner {
+    padding: 6px;
+}
+
+div.paginator_col_inner_alt {
+    padding: 6px;
+    background: #E4E8EF;
+}
+
+div.paginator_col {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 14%;
+}
+
+div.paginator_col_id {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 100px;
+    overflow: auto;
+    height: 23px;
+}
+
+div.paginator_col_date {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    width: 90px;
+}
+
+div.paginator_col_name {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    width: 195px;
+}
+
+div.paginator_nav_left {
+    text-align: left;
+    margin: 0px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    padding-left: 1px;
+}
+
+div.paginator_col_header_cdma {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 8%;
+}
+
+div.paginator_table_cdma {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+div.paginator_row_cdma {
+    padding: 0px;
+    margin: 0px;
+    width: 3100px;
+}
+
+div.table_cdma{
+    padding: 0px;
+    margin: 0px;
+    width: 800px;
+    overflow: auto;
+}
+
+div.paginator_col_cdma {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 8%;
+    overflow: auto;
+    height: 23px;
+}
+
+div.div_rssi_row_ir {
+    width: 600px;
+    padding: 0px;
+    margin: 0px;
+}
+
+div.div_rssi_column_ir {
+    width: 10%;
+    clear: none;
+    float: left;
+    padding: 0px;
+    padding-bottom: 6px;
+    margin: 0px;
+    text-align: center;
+}
+
+label.div_rssi_column_ir {
+    width: 0px;
+}
+
+div.paginator_col_ir {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 9%;
+    height: 23px;
+}
+
+
+div.paginator_col_header_ir {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 9%;
+}

@@ -1,0 +1,17 @@
+/* 
+    Document   : rf_specific
+    Created on : Jul 21, 2011, 2:46:32 PM
+    Author     : emoibhu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+dd {
+    text-align: right !important;
+}
+

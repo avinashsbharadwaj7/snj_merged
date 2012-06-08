@@ -1,0 +1,21 @@
+#!/bin/sh
+
+dos2unix ossimport
+dos2unix lteimport
+dos2unix wcdmaimport
+
+./ossimport
+
+for file_lte in `ls /home/ekf/import_scripts/imported_files/*LTE*`
+do
+	./lteimport $file_lte
+done
+
+
+for file_wcdma in `ls /home/ekf/import_scripts/imported_files/*ipdatabase*`
+do 
+	./wcdmaimport $file_wcdma
+done
+
+
+

@@ -1,0 +1,12 @@
+app/models/viewworkdaytime.php
+app/controllers/resources_controller.php
+app/controllers/jobs_controller.php
+app/views/snjs/snjcall.ctp
+app/views/jobs/viewengineer.ctp
+app/views/jobs/view.ctp
+app/views/jobs/support_signum.ctp
+app/views/jobs/edit.ctp
+app/views/jobs/add.ctp
+app/views/resources/outage.ctp
+app/views/jobs/support_signum.ctp
+app/views/resources/outage.ctp

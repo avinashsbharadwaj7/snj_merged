@@ -1,0 +1,79 @@
+#!/usr/bin/php
+<?php
+	//DATABASE CONNECTION
+	//Change the database connection to your server setting 
+	$mysqlUser = "snj";
+	$mysqlHost = "resourcelab.net";
+	$mysqlPassword = "snj_!23";
+	$mysqlDb = "snj";
+	
+	$connSnj = mysql_connect($mysqlHost, $mysqlUser, $mysqlPassword) or die ("Can not connect to ". $mysqlHost);
+	mysql_select_db ($mysqlDb, $connSnj) or die ("Can not select ".$mysqlDb);
+?>
+
+<?php
+
+	echo "IMPORTING OSS DATA";
+	
+	$resDistinctOss = mysql_query ("SELECT distinct (oss_name), oss_ip, customer
+									FROM `snj`.`oss_mapping`
+									WHERE function = 'citrix' 
+									GROUP BY oss_name
+								   ");
+								   
+	if (!$resDistinctOss)
+	{
+		echo "Invalid Query ". mysql_error();
+	}
+	
+	while ($row = mysql_fetch_assoc ($resDistinctOss))
+	{
+			$queryCountOss = "SELECT COUNT(*) 
+							  FROM target
+							  WHERE name = '".$row['oss_name']."' 
+							  GROUP BY name";
+			
+			$resCountOss = mysql_query ($queryCountOss);
+			
+			if ($resCountOss)
+			{
+				$resCountArr = mysql_fetch_assoc($resCountOss);
+				$resCount = $resCountArr['COUNT(*)'];
+				
+				if ($resCount == 1)
+				{
+					$queryUpdateOss = "UPDATE target ".
+									  "SET ipaddress = '". $row['oss_ip'] . "', " . 
+									  "customer = '". $row['customer'] . "' ". 
+									  "WHERE name = '" . $row['oss_name'] . "'";
+					
+					//echo $queryUpdateOss;
+											
+					$resUpdateOss = mysql_query($queryUpdateOss) or die (mysql_error());
+				}
+
+				else
+				{
+					$queryInsertOss = "INSERT INTO target (name, type, ipaddress, customer) VALUES (".
+									  "'". $row['oss_name'] . "', ".
+									  "'". "OSS" . "', ".
+									  "'". $row['oss_ip'] . "', ".
+									  "'". $row['customer']."'".
+									  ")";
+					
+					echo $queryInsertOss;
+									  
+					$resInsertOss = mysql_query($queryInsertOss) or die (mysql_error());								
+				}
+			}
+
+			else
+			{
+				echo "Error in query ".$mysql_error();
+			}
+
+	}
+	
+	
+	
+?>

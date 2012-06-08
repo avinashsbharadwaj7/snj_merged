@@ -1,0 +1,265 @@
+/* 
+    Document   : lte-nds
+    Created on : Jun 30, 2011, 8:30:00 PM
+    Author     : ebrrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+div.nds_comp_container {
+   margin: 0px;
+   margin-top: 5px;
+   padding: 0px;
+   width: 250px;
+}
+
+div.ndscomp_table {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+div.ndscomp_row {
+    padding: 0px;
+    margin: 0px;
+    width: 2170px;
+}
+
+div.ndssummary_row {
+    padding: 0px;
+    margin: 0px;
+    width: 675px;
+}
+
+div.ndscomp_col_header_inner {
+    padding: 6px;
+    line-height: 1.5em;
+    background-color: #c7e2cc;
+}
+
+div.ndscomp_col_header_inner_metric {
+    padding: 6px;
+    line-height: 1.5em;
+    background-color: #c7e2cc;
+    height: 20px;
+}
+
+div.ndscomp_col_header_inner_comparison {
+    padding: 6px;
+    line-height: 1.5em;
+    background-color: #c7e2cc;
+    text-align: center;
+}
+
+div.ndscomp_col_header {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 83px;
+}
+
+div.ndscomp_col_header_comments {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 300px;
+}
+
+div.ndscomp_col_header_id {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 175px;
+}
+
+div.ndscomp_col_header_site {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 100px;
+}
+
+div.ndscomp_col_header_region {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 125px;
+}
+
+div.ndscomp_col_header_cluster {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 185px;
+}
+
+div.ndscomp_col_header_metric {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 225px;
+    height: 32px;
+}
+
+div.ndscomp_col_inner {
+    padding: 0px;
+    margin: 0px;
+}
+
+div.ndscomp_col_inner_alt {
+    padding: 0px;
+    margin: 0px;
+    background: #E4E8EF;
+}
+
+div.ndscomp_col {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 83px;
+    overflow: auto;
+}
+
+div.ndscomp_col_metric {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 225px;
+}
+
+div.ndscomp_col_comments {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 300px;
+    overflow: auto;
+}
+
+div.ndscomp_col_id {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 175px;
+}
+
+div.ndscomp_col_site {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 100px;
+}
+
+div.ndscomp_col_region {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 125px;
+}
+
+div.ndscomp_col_cluster {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 185px;
+}
+
+div.ndscomp_nocomparison {
+    padding: 6px;
+    margin: 0px;
+    line-height: 12px;
+    height: 22px;
+}
+
+div.ndscomp_comparison {
+    padding: 2px;
+    margin: 0px;
+    line-height: 12px;
+    height: 30px;
+    text-align: center;
+}
+
+div.ndscomp_notapplicable {
+    padding: 4px;
+    margin: 0px;
+    background: #ffff00;
+    line-height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 12px;
+}
+
+div.ndscomp_success {
+    padding: 4px;
+    margin: 0px;
+    background: #00ff00;
+    line-height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 12px;
+}
+
+div.ndscomp_notsuccess {
+    padding: 4px;
+    margin: 0px;
+    background: #ff0000;
+    line-height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 12px;
+}
+
+div.ndscomp_nochange {
+    padding: 4px;
+    margin: 0px;
+    background: #00ff00;
+    line-height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 12px;
+}
+
+div.ndscomp_investigate {
+    padding: 4px;
+    margin: 0px;
+    background: #ff9900;
+    line-height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 12px;
+}
+
+div.nds_view {
+    margin-top: 6px;
+    width: 800px;
+    height: 625px;
+    overflow: scroll;
+}
+
+div.nds_view_new_window {
+    margin-top: 6px;
+    width: 2170px;
+    background: #ffffff;
+    font-size: 12px;
+}
+

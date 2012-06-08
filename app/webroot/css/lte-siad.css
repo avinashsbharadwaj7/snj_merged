@@ -1,0 +1,210 @@
+div.siad_container {
+   margin: 0px;
+   margin-top: 5px;
+   padding: 0px;
+   width: 250px;
+}
+
+div.siad_table {
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+div.siad_row {
+    padding: 0px;
+    margin: 0px;
+    width: 2424px;
+}
+div.siad_col_header_inner {
+    padding: 6px;
+    line-height: 1.5em;
+    background-color: #c7e2cc;
+}
+
+div.siad_col_header {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 135px;
+}
+
+div.siad_col_header_comments {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;  
+    width: 380px;
+}
+
+div.siad_col_header_id {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 175px;
+}
+
+div.siad_col_header_signum{
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 75px;
+}
+
+div.siad_col_header_name {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 218px;
+}
+
+div.siad_col_header_work {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 178px;
+}
+div.siad_col_header_team {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 58px;
+}
+
+div.siad_col_header_site {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 100px;
+}
+
+div.siad_col_header_activity {
+    clear: none;
+    float: left;
+    margin: 1px;
+    border: 1px #000 solid;
+    font-weight: bold;
+    width: 185px;
+}
+
+div.siad_col_inner {
+    padding: 0px;
+    margin: 0px;
+}
+
+div.siad_col_inner_alt {
+    padding: 0px;
+    margin: 0px;
+    background: #E4E8EF;
+}
+
+div.siad_col {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 135px;
+    overflow: auto;
+}
+
+div.siad_col_comments {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 380px;
+    overflow: auto;
+}
+
+div.siad_col_id {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 175px;
+}
+
+div.siad_col_signum {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 75px;
+}
+
+div.siad_col_name {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 218px;
+}
+
+div.siad_col_work {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 178px;
+}
+
+div.siad_col_team {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 58px;
+}
+
+div.siad_col_site {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 100px;
+}
+
+div.siad_col_activity {
+    clear: none;
+    float: left;
+    border: 1px #000 solid;
+    margin: 1px;
+    width: 185px;
+}
+
+div.siad_nocomparison {
+    padding: 6px;
+    margin: 0px;
+    line-height: 12px;
+    height: 22px;
+}
+
+div.siad_view {
+    margin-top: 6px;
+    width: 800px;
+    height: 625px;
+    overflow: scroll;
+}
+
+div.siad_view_new_window {
+    margin-top: 6px;
+    width: 2424px;
+    background: #ffffff;
+    font-size: 12px;
+}
+

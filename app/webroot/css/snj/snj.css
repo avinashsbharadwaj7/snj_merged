@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+div.prepend_op, .prepend_top {
+  margin-top:1.5em;
+}
+div.append_bottom, .append_bottom {
+  margin-bottom:1.5em;
+}
+
+#backButton {
+    background: url("../../img/permarinus_blue/arrow_blue_left.png") no-repeat scroll left center transparent;
+    color: #444444;
+    font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    padding-left: 15px;
+    list-style: none;
+}
+
+.right {
+    float: right;
+}
+
+.red-text {
+	color: red;
+}

@@ -1,0 +1,135 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+include_once 'dependencyMapExample.php';
+$myHtml->setDependencyMap($dependencyMap);
+$myHtml->init();
+$myHtml->myAdd = "myhtmls";
+$myHtml->myEdit = "myhtml";
+$myHtml->myData = $myData;
+if ($myHtml->firstLoad):
+    echo $html->css(array('rnc/style', 'rnc/jquery-ui', 'rnc/view', 'rnc/css_menu'));
+    echo $html->css('rnc/jquery.fastconfirm');
+    echo $html->css('rnc/jquery.jgrowl');
+    echo $html->css('rnc/bcp');
+    e($javascript->link('rnc/jquery-1.4.1.min'));
+    e($javascript->link('rnc/jquery-ui.min'));
+    e($javascript->link('rnc/jquery.fastconfirm'));
+    e($javascript->link('rnc/jquery.validate'));
+    e($javascript->link('rnc/jquery.jgrowl'));
+    e($javascript->link('rnc/jquery.form'));
+    e($javascript->link('rnc/jquery.blockUI'));
+    echo $javascript->link("vtip-min");
+    echo $javascript->link('rnc/ajaxValidationNoConflict');
+    echo $javascript->link("prototype");
+    echo $javascript->link("scriptaculous");
+endif;
+
+echo $myHtml->renderHtml("<li>");
+echo $myHtml->renderHtml($this->Html->link(__('Back', true), array('action' => 'index')));
+echo $myHtml->renderHtml("</li>");
+
+$signum = Authsome::get('username');
+echo $myHtml->create('RfModule', array("class" => "form"));
+echo $myHtml->input('date_created', array('label' => 'Date', 'type' => 'date', 'div' => array('style' => 'display:none'), 'after' => $helpBox->display('date_created')));
+echo $myHtml->renderHtml('<fieldset><legend>Project Definition</legend><fieldset><legend>Project Description</legend>');
+echo $myHtml->input('project_name', array('label' => 'Project Name', 'type' => 'text', 'after' => $helpBox->display('project_name')));
+echo $myHtml->input('customer_unit', array('options' => ($databaseFields->getOptions('customer_unit', '3exit')), 'after' => $helpBox->display('customer_unit')));
+echo $myHtml->input('region', array('options' => ($databaseFields->getOptions('region', '3')), 'type' => 'select', 'after' => $helpBox->display('region')));
+echo $myHtml->input('technology', array('options' => ($databaseFields->getOptions('technology', '3')), 'after' => $helpBox->display('technology')));
+echo $myHtml->input('project_type', array('options' => ($databaseFields->getOptions('project_type', '3')), 'after' => $helpBox->display('project_type')));
+echo $myHtml->input('market', array('after' => $helpBox->display('market')));
+echo $myHtml->renderHtml('</fieldset><fieldset><legend>Project (sub) Details</legend>');
+echo $myHtml->input('market_lead', array('after' => $helpBox->display('market_lead')));
+echo $myHtml->input('project_manager', array('after' => $helpBox->display('project_manager')));
+echo $myHtml->input('work_location', array('options' => ($databaseFields->getOptions('work_location', '3')), 'after' => $helpBox->display('work_location')));
+echo $myHtml->input('person_completing', array('label' => 'Engineer Signum', 'value' => $signum, 'readonly' => 'readonly', 'after' => $helpBox->display('person_completing')));
+echo $myHtml->input('sub_project_name', array('after' => $helpBox->display('sub_project_name')));
+echo $myHtml->input('sub_project_status', array('options' => ($databaseFields->getOptions('sub_project_status', '3')), 'after' => $helpBox->display('sub_project_status')));
+echo $myHtml->renderHtml('<fieldset><legend>Other Involved Engineers</legend>');
+echo $myHtml->renderHtml("<div id='additional_engineers'>");
+echo $myHtml->input('engineer_signum', array('label' => 'Additional Engineer'));
+echo $myHtml->ajaxLink("+", array('controller' => 'rf_modules', 'action' => 'updater'), array("update" => "additional_engineers", "position" => "bottom"));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("<fieldset><legend>Project Inputs</legend>");
+echo $myHtml->renderHtml('<fieldset class="long-labels"><legend>Input Verification</legend>');
+echo $myHtml->input('checklist_accurate', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Are the project inputs/checklists available and accurate?', 'after' => $helpBox->display('checklist_accurate')));
+echo $myHtml->input('checklist_accurate_reason', array('options' => ($databaseFields->getOptions('checklist_accurate_reason', '3')), 'label' => 'Reason', 'name' => 'data[RfModule][checklist_accurate_reason]'));
+echo $myHtml->input('checklist_accurate_reason_explain', array('label' => 'Please Comment', 'name' => 'data[RfModule][checklist_accurate_reason_explain]'));
+echo $myHtml->input('sow_available', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Is the SOW available and correct?', 'after' => $helpBox->display('sow_available')));
+echo $myHtml->input("sow_available_reason", array('options' => ($databaseFields->getOptions('reason', 3)), 'label' => 'Reason', 'name' => 'data[RfModule][sow_available_reason]'));
+echo $myHtml->input('sow_available_reason_explain', array('label' => 'Please Comment', 'name' => 'data[RfModule][sow_available_reason_explain]'));
+echo $myHtml->input('nw_available', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Was the NW available at project start', 'after' => $helpBox->display('nw_available')));
+echo $myHtml->input("nw_available_reason", array('options' => ($databaseFields->getOptions('reason', 3)), 'label' => 'Reason', 'name' => 'data[RfModule][nw_available_reason]'));
+echo $myHtml->input('nw_available_reason_explain', array('label' => 'Please Comment', 'name' => 'data[RfModule][nw_available_reason_explain]'));
+echo $myHtml->input('project_budget_access', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Do you have access to the project budget (TPR)?', 'after' => $helpBox->display('project_budget_access')));
+echo $myHtml->input("project_budget_access_reason", array('options' => ($databaseFields->getOptions('reason', 3)), 'label' => 'Reason', 'name' => 'data[RfModule][project_budget_access_reason]'));
+echo $myHtml->input('project_budget_access_reason_explain', array('label' => 'Please Comment', 'name' => 'data[RfModule][project_budget_access_reason_explain]'));
+echo $myHtml->input('engineers_qualified', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Are > 90% of the engineers qualified for the job?', 'after' => $helpBox->display('engineers_qualified')));
+echo $myHtml->input('engineers_qualified_number', array('options' => ($databaseFields->getOptions('engineers_qualified', 3)), 'label' => 'How many are qualified?', 'name' => 'data[RfModule][engineers_qualified_number]'));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("<fieldset><legend>Project Milestone/Dates</legend>");
+echo $myHtml->input('project_start_date', array('type' => 'date', 'after' => $helpBox->display('project_start_date')));
+echo $myHtml->input('delivery_date', array('label' => 'Initial Planned Delivery Date (based on SOW)', 'type' => 'date', 'after' => $helpBox->display('delivery_date')));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("<fieldset><legend>Project Deliverables</legend>");
+echo $myHtml->renderHtml('<fieldset class="long-labels"><legend>Recommendations & Implementations</legend>');
+echo $myHtml->input('num_change_recom', array('label' => 'Number of change recommendations (0=none)', 'after' => $helpBox->display('num_change_recom')));
+echo $myHtml->input('num_reject_recom', array('label' => 'No. of recommendations rejected from final/close-out report', 'after' => $helpBox->display('num_reject_recom')));
+echo $myHtml->input('rejection_responsible', array('options' => ($databaseFields->getOptions('rejection_responsible', '3')), 'label' => 'Who is responsible for majority of rejections', 'name' => 'data[RfModule][rejection_responsible]'));
+echo $myHtml->input('rejection_responsible_reason', array('options' => ($databaseFields->getOptions('fail_reason', '3')), 'label' => 'Major reason for rejections', 'name' => 'data[RfModule][rejection_responsible_reason]'));
+echo $myHtml->input('rejection_responsible_reason_explain', array('label' => 'Please Explain', 'name' => 'data[RfModule][rejection_responsible_reason_explain]'));
+echo $myHtml->input('num_implemented_changes', array('label' => 'Total of number of accepted changes not implemented', 'after' => $helpBox->display('num_implemented_changes')));
+echo $myHtml->input('num_implemented_changes_reason', array('options' => ($databaseFields->getOptions('fail_reason', '3')), 'label' => 'Major reason for not implemented', 'name' => 'data[RfModule][num_implemented_changes_reason]'));
+echo $myHtml->input('num_implemented_changes_reason_explain', array('label' => 'Please Explain', 'name' => 'data[RfModule][num_implemented_changes_reason_explain]'));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml('<fieldset class="long-labels"><legend>SOW/Delivery Date adjustments & Tracking</legend>');
+echo $myHtml->input('num_sow_adjustments', array('label' => 'Total number of SOW adjustments (0=none)', 'after' => $helpBox->display('num_sow_adjustments')));
+echo $myHtml->input('sow_adjustments_reason_1', array('options' => ($databaseFields->getOptions('sow_adjustment_reason', 3)), 'label' => 'Reason for SOW adjustments #1'));
+echo $myHtml->input('sow_adjustments_reason_1_explain', array('label' => 'Please Comment'));
+echo $myHtml->input('sow_adjustments_reason_2', array('options' => ($databaseFields->getOptions('sow_adjustment_reason', 3)), 'label' => 'Reason for SOW adjustments #2'));
+echo $myHtml->input('sow_adjustments_reason_2_explain', array('label' => 'Please Comment'));
+echo $myHtml->input('sow_adjustments_reason_3', array('options' => ($databaseFields->getOptions('sow_adjustment_reason', 3)), 'label' => 'Reason for SOW adjustments #3'));
+echo $myHtml->input('sow_adjustments_reason_3_explain', array('label' => 'Please Comment'));
+echo $myHtml->renderHtml('<fieldset class="long-labels"><legend>Delivery</legend>');
+echo $myHtml->input('approved_delivery_date', array('label' => 'Project Approved Delivery Date', 'type' => 'text', 'class' => 'date', 'after' => $helpBox->display('approved_delivery_date')));
+echo $myHtml->input('delivery_date_adjustment_reason_1', array('options' => ($databaseFields->getOptions('late_reason', 3)), 'label' => 'Reason for change to planned date #1'));
+echo $myHtml->input('delivery_date_adjustment_reason_1_explain', array('label' => 'Please Comment'));
+echo $myHtml->input('delivery_date_adjustment_reason_2', array('options' => ($databaseFields->getOptions('late_reason', 3)), 'label' => 'Reason for change to planned date #2'));
+echo $myHtml->input('delivery_date_adjustment_reason_2_explain', array('label' => 'Please Comment'));
+echo $myHtml->input('delivery_date_adjustment_reason_3', array('options' => ($databaseFields->getOptions('late_reason', 3)), 'label' => 'Reason for change to planned date #3'));
+echo $myHtml->input('delivery_date_adjustment_reason_3_explain', array('label' => 'Please Comment'));
+echo $myHtml->input('actual_delivery_date', array('type' => 'text', 'class' => 'date', 'after' => $helpBox->display('actual_delivery_date')));
+echo $myHtml->input('actual_delivery_date_reason', array('options' => ($databaseFields->getOptions('late_reason', '3')), 'label' => 'Reason for late delivery'));
+echo $myHtml->input('actual_delivery_date_reason_explain', array('label' => 'Please Comment'));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("<fieldset>");
+echo $myHtml->renderHtml("<legend>Add Pre Launch Report</legend>");
+echo $myHtml->input('number_of_drives');
+echo $myHtml->input("drive1_fail_reason", array('options' => $databaseFields->getOptions('pre_launch_drive_fail_reason', 3)));
+echo $myHtml->input("drive1_fail_description");
+echo $myHtml->input("drive2_fail_reason", array('options' => $databaseFields->getOptions('pre_launch_drive_fail_reason', 3)));
+echo $myHtml->input("drive2_fail_description");
+echo $myHtml->input("drive3_fail_reason", array('options' => $databaseFields->getOptions('pre_launch_drive_fail_reason', 3)));
+echo $myHtml->input("drive3_fail_description");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml('<fieldset class="long-labels"><legend>Delivery Review</legend>');
+echo $myHtml->input('meet_proj_expectations', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Did we meet the project SOW & expectations?', 'after' => $helpBox->display('meet_proj_expectations')));
+echo $myHtml->input('meet_proj_expectations_reason', array('options' => ($databaseFields->getOptions('late_reason', 3)),
+    'label' => 'Reason for not meeting SOW & Expectations'));
+echo $myHtml->input('meet_proj_expectations_reason_explain', array('label' => 'Please Comment', 'name' => 'data[RfModule][meet_proj_expectations_reason_explain]'));
+echo $myHtml->input('project_approved', array('options' => ($databaseFields->getOptions('yes_no', '3')), 'label' => 'Was the project approved by the customer when formally presented (on time)?', 'after' => $helpBox->display('project_approved')));
+echo $myHtml->input('customer_accept_reason', array('options' => ($databaseFields->getOptions('customer_accept_reason', '3')),
+    'label' => 'Reason for customer not accepting project'));
+echo $myHtml->input('customer_accept_reason_explain', array('label' => 'Please Comment'));
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->renderHtml("</fieldset>");
+echo $myHtml->end(__('Submit Report', true));
+?>
