@@ -267,7 +267,7 @@ class ResourcesController extends AppController
 				
 				else
 				{
-					$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."' AND task_id = '".$taskId."'");
+					$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."'");
 					$this->redirect(array ('controller' => 'jobs', 'action' => 'view',$jobId));
 					$this->set('flag', 0);
 				}
@@ -284,7 +284,7 @@ class ResourcesController extends AppController
 				
 				else
 				{
-					$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."' AND task_id = '".$taskId."'");
+					$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."'");
 					$this->redirect(array ('controller' => 'jobs', 'action' => 'view',$jobId));
 					$this->set('flag', 0);
 				}
@@ -296,7 +296,7 @@ class ResourcesController extends AppController
 				//debug ("low");
 				
 				$this->set('flag', 0);
-				$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."' AND task_id = '".$taskId."'");
+				$this->Resource->query("UPDATE resources SET rev_no = 1 WHERE job_id = '".$jobId."'");
 				$this->redirect(array ('controller' => 'jobs', 'action' => 'view',$jobId));
 			}
 		

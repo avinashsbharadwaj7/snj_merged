@@ -503,7 +503,7 @@
       
   <div id="divNodesB" style="display:none">
   <?php //echo $this->Form->input('Node.source_node',array('type'=>'text','READONLY' => true,'value'=>'-Source node will be displayed here upon saving-','style'=>'width:335px') );?>
-    <?php echo $this->Form->input('Node.target_node',array('label'=>'RNC Target Nodes','type'=>'text', 'style'=>'width:250px', 'Label'=>'Tnode') );?>
+    <?php echo $this->Form->input('Node.target_node',array('value' => 'test', 'label'=>'RNC Target Nodes','type'=>'text', 'style'=>'width:250px', 'Label'=>'Tnode') );?>
     <?php echo $this->Form->input('Node.adjacent_nodes',array('label'=>'RNC Adjacent Nodes','type'=>'textarea') );?>
   </div>
   <div id="diveNodesB" style="display:none">

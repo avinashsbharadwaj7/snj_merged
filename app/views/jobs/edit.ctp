@@ -294,6 +294,7 @@ $name = Authsome::get('first_name') . ' ' . Authsome::get('last_name');
 
     <?php //echo $this->Form->input('node_Reparenting', array('type' => 'checkbox', 'id' => 'node_reparenting', 'onClick' => 'javascript:HideUnhideNodes()')); ?>
     <?php
+		//debug ($this->data);
 		if (!empty ($this->data['Node']['source_node']))
 		{
 			echo $this->Form->input('Node.source_node', array('READONLY' => true, 'type' => 'text', 'READONLY' => true, 'value' => '-Source node will be displayed here upon saving-', 'style' => 'width:335px')); 
