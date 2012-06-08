@@ -324,8 +324,27 @@
 			
 		<?php endif ?>
 			
+		<?php  ?>
 		  
-          <td><?php echo $node['Node']['concerned_node']; ?></td>
+		  
+          <td><?php 
+			if ($flag == false)
+			{
+				//debug($nodes[sizeof($nodes) - 1]['Node']['concerned_node']);
+				if ($count == sizeof($nodes) - 1)
+				{
+					echo $nodes[sizeof($nodes) - 1]['Node']['concerned_node'];
+				}
+				else
+				{
+					echo "------";
+				}
+			}
+			else
+			{
+				echo $node['Node']['concerned_node']; 
+			}
+			?></td>
 		  <td><?php echo $node['Node']['node_type']; ?></td>
 		  
 		  <?php if ($flag == false) : ?>

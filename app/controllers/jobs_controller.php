@@ -912,7 +912,7 @@ class JobsController extends AppController {
 			$resJob = $this->Job->query("SELECT * FROM jobs as Job WHERE job_id = '".$id."' AND rev_no = (SELECT max(rev_no) FROM jobs WHERE job_id = '".$id."')");
 			$resTask = $this->Task->query("SELECT * FROM tasks as Task WHERE job_id = '".$id."' AND rev_no = (SELECT max(rev_no) FROM tasks WHERE job_id = '".$id."')");
 			$resNode = $this->Node->find('all', array ('conditions' => array ('job_id'=> $id)));
-            
+            //debug ($resNode);
             //debug($resJob);
             if($resJob[0]['Job']['rev_no']=='-1'){
             	$this->Session->setFlash('Cannot edit a job that has been cancelled.');
@@ -938,7 +938,7 @@ class JobsController extends AppController {
 			array_shift ($resTask[sizeof($resTask) - 1 ]['Task']);
 
 			$this->data['Task']= $resTask[sizeof($resTask) - 1]['Task'];
-			$this->data['Node'] = $resNode[0]['Node'];
+			$this->data['Node'] = $resNode;;
 			$concerendNode = "";
 			//debug ($resTask);
 			foreach ($resTask as $task)

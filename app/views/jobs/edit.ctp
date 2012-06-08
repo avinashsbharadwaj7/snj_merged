@@ -294,23 +294,32 @@ $name = Authsome::get('first_name') . ' ' . Authsome::get('last_name');
 
     <?php //echo $this->Form->input('node_Reparenting', array('type' => 'checkbox', 'id' => 'node_reparenting', 'onClick' => 'javascript:HideUnhideNodes()')); ?>
     <?php
-		//debug ($this->data);
-		if (!empty ($this->data['Node']['source_node']))
+		foreach ($this->data['Node'] as $node)
 		{
-			echo $this->Form->input('Node.source_node', array('READONLY' => true, 'type' => 'text', 'READONLY' => true, 'value' => '-Source node will be displayed here upon saving-', 'style' => 'width:335px')); 
+			//debug ($this->data);
+			if (!empty ($node['Node']['source_node']))
+			{
+				echo $this->Form->input('Node.source_node', array('READONLY' => true, 'type' => 'text', 'READONLY' => true, 'value' => '-Source node will be displayed here upon saving-', 'style' => 'width:335px')); 
+			}
 		}
 	?>
 
 	<?php 
-		if (!empty ($this->data['Node']['target_node']))
+		foreach ($this->data['Node'] as $node)
 		{
-			echo $this->Form->input('Node.target_node', array('READONLY' => true, 'type' => 'text', 'onfocus' => 'javascript:selectTextBox(target_node)', 'id' => 'target_node', 'style' => 'width:250px')); 
+			if (!empty ($node['Node']['target_node']))
+			{
+				echo $this->Form->input('Node.target_node', array('READONLY' => true, 'type' => 'text', 'onfocus' => 'javascript:selectTextBox(target_node)', 'id' => 'target_node', 'style' => 'width:250px', 'value' => $node['Node']['target_node'])); 
+			}
 		}
 	?>
 	<?php
-		if (!empty ($this->data['Node']['adjacent_nodes']))
+		foreach ($this->data['Node'] as $node)
 		{
-			echo $this->Form->input('Node.adjacent_nodes', array('READONLY' => true, 'type' => 'textarea', 'id' => 'adjacent_nodes')); 
+			if (!empty ($node['Node']['adjacent_nodes']))
+			{
+				echo $this->Form->input('Node.adjacent_nodes', array('READONLY' => true, 'type' => 'textarea', 'id' => 'adjacent_nodes', 'value' => $node['Node']['adjacent_nodes'])); 
+			}
 		}
 	?>
 	
